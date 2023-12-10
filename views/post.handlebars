@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>{{post.title}}</title>
+</head>
+
+<body>
+    <header>
+        <h1>Tech Blog</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            {{#if isAuthenticated}}
+                <a href="/logout">Logout</a>
+            {{else}}
+                <a href="/login">Login</a>
+                <a href="/signup">Signup</a>
+            {{/if}}
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="post">
+            <h2>{{post.title}}</h2>
+            <p>{{post.content}}</p>
+            <p>Posted by {{post.User.username}} on {{post.createdAt}}</p>
+            <h3>Comments</h3>
+            {{#each post.Comments}}
+                <div class="comment">
+                    <p>{{text}}</p>
+                    <p>Comment by {{User.username}} on {{createdAt}}</p>
+                </div>
+            {{/each}}
+        </div>
+
+        {{#if isAuthenticated}}
+            <div class="form-container">
+                <h3>Add a Comment</h3>
+                <form action="/post/{{post.id}}/comment" method="post">
+                    <label for="commentText">Comment:</label>
+                    <textarea id="commentText" name="commentText" required></textarea>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        {{/if}}
+    </div>
+
+</body>
+
+</html>
